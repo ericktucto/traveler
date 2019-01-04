@@ -1,0 +1,24 @@
+{
+    "name": "erick/ghost",
+    "description": "Teoria de Ghosts para solventar problemas en pruebas unitarias",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Erick Tucto",
+            "email": "erick.tucto@outlook.com"
+        }
+    ],
+    "require": {
+        "phpunit/phpunit": "^7.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ghost\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Ghost\\Tests\\": "tests/"
+        }
+    }
+}
