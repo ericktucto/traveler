@@ -12,37 +12,34 @@ class Register
     public function __construct(array $travelers)
     {
         foreach ($travelers as $travelerName => $stubName) {
-            $traveler = new ReflectionClass($stubName);
-            if (!$traveler->isSubClassOf(Stub::class)) {
-                throw new Exception("Your {$stubName} must be an instance of class Traveler\Stub.");
-            }
+            $this->checkIfInheritStub($stubName);
             if (array_key_exists($stubName, self::$travelers)) {
                 throw new Exception("{$stubName} is already registed.");
             }
-            class_alias($stubName, $travelerName);
-            self::$travelers[$stubName] = new Traveler($travelerName);
-        }
-    }
-
-    public function __destruct()
-    {
-        foreach (self::$travelers as &$traveler) {
-            if (!$traveler->isGlobal()) {
-                $traveler->clear();
-            }
+            $this->createTraveler($stubName, $travelerName);
         }
     }
 
     public static function globals(array $travelers)
     {
         foreach ($travelers as $travelerName => $stubName) {
-            $traveler = new ReflectionClass($stubName);
-            if (!$traveler->isSubClassOf(Stub::class)) {
-                throw new Exception("Your {$stubName} must be an instance of class Traveler\Stub.");
-            }
-            class_alias($stubName, $travelerName);
-            self::$travelers[$stubName] = new Traveler($travelerName, null, true);
+            self::checkIfInheritStub($stubName);
+            self::createTraveler($stubName, $travelerName, null, true);
         }
+    }
+
+    public function checkIfInheritStub(string $stubName)
+    {
+        $traveler = new ReflectionClass($stubName);
+        if (!$traveler->isSubClassOf(Stub::class)) {
+            throw new Exception("Your {$stubName} must be an instance of class Traveler\Stub.");
+        }
+    }
+
+    public function createTraveler(string $stubName, string $travelerName, object $class = null, bool $global = false)
+    {
+        class_alias($stubName, $travelerName);
+        self::$travelers[$stubName] = new Traveler($travelerName, $class, $global);
     }
 
     public function set(string $travelerName, object $class)
@@ -62,5 +59,14 @@ class Register
             throw new Exception("{$travelerName} havent a class anonymous.");
         }
         return $class->getStub();
+    }
+
+    public function __destruct()
+    {
+        foreach (self::$travelers as &$traveler) {
+            if (!$traveler->isGlobal()) {
+                $traveler->clear();
+            }
+        }
     }
 }
