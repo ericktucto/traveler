@@ -1,40 +1,22 @@
 <?php
-namespace Ghost\Tests\Unit;
+namespace Ghost\Tests\Integration;
 
 use Ghost\Ghost;
-use Ghost\Person;
-use Ghost\Tests\Unit\UnitCase;
 
-class PersonTest extends UnitCase
+class PersonTest extends IntegrationCase
 {
-/*    protected function setUp()
-    {
-        $this->ghost = new Ghost;
-        $this->ghost->regiser(['Handlers\\Events');
-        $this->ghost->start();
-    }
-
-    protected function tearDown()
-    {
-        unset($this->ghost);
-    }
-*/
     /**
      * @test
      */
     public function first_greet_person_take_name()
     {
         $ghost = new Ghost;
-
-        $events = new class {
-            public static function check()
-            {
-                return null;
-            }
-        };
+        $content = '
+            public function check() {}
+        ';
 
         $ghost->register([
-            'Handlers\\Events' => $events
+            'Handlers\\Events' => $content
         ]);
 
         $ghost->start();

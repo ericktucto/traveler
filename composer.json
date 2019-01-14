@@ -1,6 +1,6 @@
 {
-    "name": "erick/ghost",
-    "description": "Teoria de Ghosts para solventar problemas en pruebas unitarias",
+    "name": "erick/traveler",
+    "description": "Teoria de Travelers para solventar problemas en pruebas unitarias",
     "license": "MIT",
     "authors": [
         {
@@ -13,12 +13,15 @@
     },
     "autoload": {
         "psr-4": {
-            "Ghost\\": "src/"
+            "Traveler\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Ghost\\Tests\\": "tests/"
+            "Traveler\\Tests\\": "tests/"
         }
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^4.2"
     }
 }

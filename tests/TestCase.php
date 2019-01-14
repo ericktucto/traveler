@@ -1,5 +1,5 @@
 <?php
-namespace Ghost\Tests;
+namespace Traveler\Tests;
 
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 

@@ -1,7 +1,7 @@
 <?php
-namespace Ghost\Tests\Unit;
+namespace Traveler\Tests\Unit;
 
-use Ghost\Tests\TestCase;
+use Traveler\Tests\TestCase;
 
 class UnitCase extends TestCase
 {
