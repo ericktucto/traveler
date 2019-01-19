@@ -41,7 +41,7 @@ class Traveler
     public function bind(object $stub)
     {
         if (!is_null($this->stub)) {
-            throw new Exception("No se puede atar por que ya existe");
+            throw new Exception("Already exists stub on traveler");
         }
         $this->stub = $stub;
     }

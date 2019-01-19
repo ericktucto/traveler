@@ -6,6 +6,7 @@ use Traveler\Register;
 use Traveler\Tests\Unit\Stubs\GlobalStub;
 use Traveler\Tests\Unit\Stubs\ExistsStub;
 use Traveler\Tests\Unit\Stubs\LocalStub;
+use Traveler\Tests\Unit\Stubs\NotStub;
 
 class RegisterTest extends UnitCase
 {
@@ -75,5 +76,18 @@ class RegisterTest extends UnitCase
             "Traveler\Tests\Unit\Stubs\LocalStub havent a class anonymous."
         );
         Register::getStub(LocalStub::class)->getLastName();
+    }
+
+    /**
+     * @test
+     */
+    public function stub_should_be_instance_of_Traveler_Stub()
+    {
+        $this->expectExceptionMessage(
+            "Your Traveler\Tests\Unit\Stubs\NotStub must be an instance of class Traveler\Stub."
+        );
+        new Register([
+            'Foo\\Bar\\NotStub' => NotStub::class
+        ]);
     }
 }

@@ -49,4 +49,16 @@ class TravelerTest extends UnitCase
         $traveler->clear();
         $this->assertNull($traveler->getStub());
     }
+
+    /**
+     * @test
+     */
+    public function bind_only_stub_on_traveler()
+    {
+        $this->expectExceptionMessage(
+            "Already exists stub on traveler"
+        );
+        $traveler = new Traveler('Foo\\Bar', new class {});
+        $traveler->bind(new class {});
+    }
 }
