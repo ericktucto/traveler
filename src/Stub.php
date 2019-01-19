@@ -26,7 +26,7 @@ class Stub
 
     public function __unset($attribute)
     {
-        usset(Register::getStub(get_called_class())->$attribute);
+        unset(Register::getStub(get_called_class())->$attribute);
     }
 
     public function __isset($attribute)
@@ -36,6 +36,6 @@ class Stub
 
     public function __invoke(...$args)
     {
-        return Register::getStub(get_called_class())->__invoke(...$args);
+        return Register::getStub(get_called_class())->getInvokeMagic(...$args);
     }
 }

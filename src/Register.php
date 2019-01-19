@@ -7,8 +7,19 @@ use ReflectionClass;
 
 class Register
 {
+    /**
+     * Array to Travelers
+     *
+     * @var array
+     */
     protected static $travelers = [];
 
+    /**
+     * Register to travelers
+     * 
+     * @param array $travelers
+     * @throws Exception
+     */
     public function __construct(array $travelers)
     {
         foreach ($travelers as $travelerName => $stubName) {
@@ -20,6 +31,11 @@ class Register
         }
     }
 
+    /**
+     * Register global travelers
+     * 
+     * @param array $travelers
+     */
     public static function globals(array $travelers)
     {
         foreach ($travelers as $travelerName => $stubName) {
@@ -28,7 +44,13 @@ class Register
         }
     }
 
-    public function checkIfInheritStub(string $stubName)
+    /**
+     * Check if stub use \Traveler\Stub
+     * 
+     * @param string $stubName
+     * @throws Exception
+     */
+    protected function checkIfInheritStub(string $stubName)
     {
         $traveler = new ReflectionClass($stubName);
         if (!$traveler->isSubClassOf(Stub::class)) {
@@ -36,22 +58,49 @@ class Register
         }
     }
 
+    /**
+     * Create and register new traveler
+     * 
+     * @param string $stubName
+     * @param string $travelerName
+     * @param object|null $class
+     * @param bool $global
+     */
     public function createTraveler(string $stubName, string $travelerName, object $class = null, bool $global = false)
     {
         class_alias($stubName, $travelerName);
         self::$travelers[$stubName] = new Traveler($travelerName, $class, $global);
     }
 
+    /**
+     * Set class anonymous to registered traveler
+     * 
+     * @param string $travelerName
+     * @param object $class
+     */
     public function set(string $travelerName, object $class)
     {
         self::$travelers[$travelerName]->bind($class);
     }
 
+    /**
+     * Get traveler
+     * 
+     * @param string $travelerName
+     * @return \Traveler\Traveler
+     */
     public function get(string $travelerName)
     {
         return self::$travelers[$travelerName];
     }
 
+    /**
+     * Get Stub of Traveler
+     * 
+     * @param string $travelerName
+     * @return \Traveler\Stub
+     * @throws Exception
+     */
     public function getStub(string $travelerName)
     {
         $class = self::get($travelerName);
